@@ -1,0 +1,31 @@
+{
+	"name": "nsblob-process-wrapper",
+	"description": "wraps process io in nsblob streams",
+	"version": "0.0.1-1",
+	"main": "lib/index.js",
+	"bin": {
+		"nsblob-process-wrapper": "lib/cli.js"
+	},
+	"author": "Prokop Schield",
+	"dependencies": {
+		"nsblob-stream": "0.1.0-6",
+		"pretty-print-buffer": "0.1.0-3"
+	},
+	"devDependencies": {
+		"@types/node": ">=16"
+	},
+	"keywords": [],
+	"license": "GPL-3.0-or-later",
+	"types": "./lib/index.d.ts",
+	"directories": {
+		"lib": "lib"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/prokopschield/nsblob-process-wrapper.git"
+	},
+	"bugs": {
+		"url": "https://github.com/prokopschield/nsblob-process-wrapper/issues"
+	},
+	"homepage": "https://github.com/prokopschield/nsblob-process-wrapper#readme"
+}
