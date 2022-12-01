@@ -35,9 +35,11 @@ export async function exec(
 	if (typeof stdin === 'string') {
 		if (stdin.length === 64) {
 			child.stdin && saturate(stdin, child.stdin);
-		} else {
+		} else if (stdin.length) {
 			process.stdin?.write(stdin);
 			process.stdin?.end();
+		} else {
+			process.stdin.end();
 		}
 	} else if (stdin instanceof Uint8Array) {
 		process.stdin?.write(stdin);
