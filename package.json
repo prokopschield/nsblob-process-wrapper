@@ -1,7 +1,7 @@
 {
 	"name": "nsblob-process-wrapper",
 	"description": "wraps process io in nsblob streams",
-	"version": "0.0.1-2",
+	"version": "0.0.1-3",
 	"main": "lib/index.js",
 	"bin": {
 		"nsblob-process-wrapper": "lib/cli.js"
