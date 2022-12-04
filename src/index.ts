@@ -36,16 +36,16 @@ export async function exec(
 		if (stdin.length === 64) {
 			child.stdin && saturate(stdin, child.stdin);
 		} else if (stdin.length) {
-			process.stdin?.write(stdin);
-			process.stdin?.end();
+			child.stdin?.write(stdin);
+			child.stdin?.end();
 		} else {
-			process.stdin.end();
+			child.stdin?.end();
 		}
 	} else if (stdin instanceof Uint8Array) {
-		process.stdin?.write(stdin);
-		process.stdin?.end();
+		child.stdin?.write(stdin);
+		child.stdin?.end();
 	} else {
-		process.stdin && stdin.pipe(process.stdin);
+		child.stdin && stdin.pipe(child.stdin);
 	}
 
 	const stdout = await stdout_p;
