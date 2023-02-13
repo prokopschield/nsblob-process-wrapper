@@ -13,7 +13,7 @@ async function main() {
 
 	console.log('--- STANDARD OUTPUT ---');
 
-	const stdout = await fetch_buffer(output.stdout);
+	const stdout = await output.stdout.toBuffer();
 
 	process.stdout.write(is_tty ? pretty(stdout) : stdout);
 
@@ -21,7 +21,7 @@ async function main() {
 
 	console.log('--- STANDARD ERROR ---');
 
-	const stderr = await fetch_buffer(output.stderr);
+	const stderr = await output.stderr.toBuffer();
 
 	process.stdout.write(is_tty ? pretty(stderr) : stderr);
 

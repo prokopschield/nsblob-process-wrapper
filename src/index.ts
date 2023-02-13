@@ -1,21 +1,26 @@
 import cp from 'child_process';
-import { saturate, store } from 'nsblob-stream';
+import { saturate, Source } from 'nsblob-stream';
 import { Readable } from 'stream';
 
-export type Input = string | Buffer | Readable;
+export type Input = string | Buffer | Readable | Source<{}>;
 
 export type Output = {
 	exitCode: number;
-	stdout: string;
-	stderr: string;
+	stdout: Source<{}>;
+	stderr: Source<{}>;
 };
 
 export async function handle(
 	child: cp.ChildProcess,
 	stdin: Input | Promise<Input> = ''
 ): Promise<Output> {
-	const stdout_p = child.stdout ? store(child.stdout) : '';
-	const stderr_p = child.stderr ? store(child.stderr) : '';
+	const stdout_p = child.stdout
+		? Source.fromStream(child.stdout, {})
+		: Source.fromBuffer(Buffer.alloc(0));
+
+	const stderr_p = child.stderr
+		? Source.fromStream(child.stderr, {})
+		: Source.fromBuffer(Buffer.alloc(0));
 
 	const exit_p = new Promise<number>((resolve, reject) => {
 		child.on('exit', (code) => {
@@ -41,6 +46,9 @@ export async function handle(
 	} else if (stdin instanceof Uint8Array) {
 		child.stdin?.write(stdin);
 		child.stdin?.end();
+	} else if (stdin instanceof Source) {
+		stdin = await stdin.toStream();
+		child.stdin && stdin.pipe(child.stdin);
 	} else {
 		child.stdin && stdin.pipe(child.stdin);
 	}
