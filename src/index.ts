@@ -10,13 +10,10 @@ export type Output = {
 	stderr: string;
 };
 
-export async function exec(
-	binaryPath: string,
-	stdin: Input | Promise<Input> = '',
-	options: cp.ExecOptions = {}
+export async function handle(
+	child: cp.ChildProcess,
+	stdin: Input | Promise<Input> = ''
 ): Promise<Output> {
-	const child = cp.exec(binaryPath, options);
-
 	const stdout_p = child.stdout ? store(child.stdout) : '';
 	const stderr_p = child.stderr ? store(child.stderr) : '';
 
@@ -58,4 +55,25 @@ export async function exec(
 		stdout,
 		stderr,
 	};
+}
+
+export async function spawn(
+	binaryPath: string,
+	args: readonly string[],
+	stdin: Input | Promise<Input> = '',
+	options: cp.ExecOptions = {}
+): Promise<Output> {
+	const child = cp.spawn(binaryPath, args, options);
+
+	return handle(child, stdin);
+}
+
+export async function exec(
+	command: string,
+	stdin: Input | Promise<Input> = '',
+	options: cp.ExecOptions = {}
+): Promise<Output> {
+	const child = cp.exec(command, options);
+
+	return handle(child, stdin);
 }
