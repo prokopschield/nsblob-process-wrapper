@@ -2,7 +2,12 @@ import cp from 'child_process';
 import { saturate, Source } from 'nsblob-stream';
 import { Readable } from 'stream';
 
-export type Input = string | Buffer | Readable | Source<{}>;
+export type Input =
+	| string
+	| Buffer
+	| Readable
+	| NodeJS.ReadableStream
+	| Source<any>;
 
 export type Output = {
 	exitCode: number;
