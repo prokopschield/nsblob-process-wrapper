@@ -8,7 +8,7 @@
 	},
 	"author": "Prokop Schield",
 	"dependencies": {
-		"nsblob-stream": "^0.1.1-1",
+		"nsblob-stream": "^0.1.6",
 		"pretty-print-buffer": "^0.1.0-3"
 	},
 	"devDependencies": {
